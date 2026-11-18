@@ -7,13 +7,15 @@
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "migrate": "tsx scripts/migrate.ts"
+    "migrate": "tsx scripts/migrate.ts",
+    "diagnose": "tsx scripts/diagnose.ts"
   },
   "type": "module",
   "dependencies": {
+    "@ai-sdk/google": "^4.0.96",
     "@descope/mcp-express": "^1.6.0",
-    "@descope/node-sdk": "^2.14.0",
-    "@mastra/core": "^1.59.0",
+    "@descope/node-sdk": "^2.22.0",
+    "@mastra/core": "^1.77.0",
     "@mastra/libsql": "^1.20.0",
     "@mastra/memory": "^1.26.2",
     "cors": "^2.8.6",

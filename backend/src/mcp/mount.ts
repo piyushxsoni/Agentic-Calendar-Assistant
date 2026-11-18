@@ -3,10 +3,10 @@ import { listUpcomingMeetingsTools } from "./calendar-tools.js";
 import type { Express } from "express";
 
 export function mountMcpServer(app: Express) {
-  const wellKnown = process.env.DESCOPE_MCP_SERVER_WELL_KNOWN_URL;
+  const wellKnown = process.env.DESCOPE_MCP_SERVER_WELL_KNOWN_URL?.trim();
 
-  if (!wellKnown) {
-    console.warn("DESCOPE_MCP_SERVER_WELL_KNOWN_URL is disabled");
+  if (!wellKnown || !wellKnown.endsWith("/.well-known/openid-configuration")) {
+    console.warn("DESCOPE_MCP_SERVER_WELL_KNOWN_URL is disabled or invalid (must end with /.well-known/openid-configuration)");
     return;
   }
 

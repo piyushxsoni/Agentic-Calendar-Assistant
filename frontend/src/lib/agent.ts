@@ -48,6 +48,11 @@ export async function streamAgentChat(
     body: JSON.stringify(input),
   });
 
+  if (res.status === 401) {
+    if (typeof window !== "undefined") window.location.href = "/sign-in";
+    throw new Error("Session expired. Please sign in again.");
+  }
+
   if (!res.ok || !res.body) {
     throw new Error("Agent request failed");
   }

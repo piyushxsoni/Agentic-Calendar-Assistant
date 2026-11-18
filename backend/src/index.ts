@@ -5,6 +5,9 @@ import { getPool } from "./db/pool.js";
 import { connectionRouter } from "./routes/connection.routes.js";
 import { agentRoutes } from "./routes/agent.routes.js";
 import { mountMcpServer } from "./mcp/mount.js";
+import { logEnvReport } from "./config/env.js";
+
+logEnvReport();
 
 const app = express();
 const port = Number(process.env.PORT) || 4000;

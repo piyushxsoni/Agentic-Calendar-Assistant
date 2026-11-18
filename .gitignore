@@ -3,4 +3,7 @@ node_modules/
 .env.*
 !.env.example
 .next/
-dist/git status
+dist/
+# SQLite runtime files
+*.db-shm
+*.db-wal

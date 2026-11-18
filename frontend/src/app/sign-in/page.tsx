@@ -8,6 +8,8 @@ import {
 } from "@/components/ui/card";
 import { Sparkles } from "lucide-react";
 
+const containerClassname = ""
+
 function SignInPage() {
   return (
     <main className="app-shell-bg flex min-h-svh items-center justify-center px-6 py-10">

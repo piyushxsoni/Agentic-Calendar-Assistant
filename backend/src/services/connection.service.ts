@@ -1,5 +1,6 @@
 import {
   CALENDAR_CONNECTION_ID,
+  CALENDAR_SCOPES,
   CALENDAR_CONNECTION_LABEL,
   descopeClient,
 } from "../config/descope.js";
@@ -31,14 +32,27 @@ export async function createCalendarConnectUrl(input: {
 }) {
   const response = await descopeClient.outbound.connect(
     calendarAppId(),
-    { redirectUrl: input.redirectUrl },
+    { redirectUrl: input.redirectUrl, scopes: CALENDAR_SCOPES },
     input.refreshToken,
   );
 
   if (!response.ok || !response.data?.url) {
-    const errorDetails = response.error ? ` - ${response.error.errorMessage || response.error.errorDescription}` : "";
-    console.error("Descope outbound connect failed:", response.error);
-    throw new Error(`could not start connection${errorDetails}`);
+    // Log the Descope error code/message (never tokens) for diagnosis.
+    console.error("Descope outbound connect failed:", {
+      status: response.code,
+      errorCode: response.error?.errorCode,
+      message: response.error?.errorMessage ?? response.error?.errorDescription,
+    });
+    const raw = `${response.error?.errorMessage ?? ""} ${response.error?.errorDescription ?? ""}`.toLowerCase();
+    if (raw.includes("record not found") || raw.includes("outbound app")) {
+      throw new Error(
+        `Google Calendar connection '${calendarAppId()}' was not found in the Descope project. Check DESCOPE_CALENDAR_CONNECTION_ID against the Outbound App ID in the Descope Console.`,
+      );
+    }
+    if (response.code === 401 || raw.includes("unauthorized")) {
+      throw new Error("Your session is no longer valid. Please sign in again.");
+    }
+    throw new Error("could not start connection");
   }
 
   await upsertCalendarConnection({ userId: input.userId, status: "pending" });

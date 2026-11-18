@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@base-ui/react": "^1.7.0",
-    "@descope/nextjs-sdk": "^0.15.65",
+    "@descope/nextjs-sdk": "^0.15.71",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^1.31.0",

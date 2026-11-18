@@ -16,7 +16,7 @@ function SignInComponent() {
         onError={(event) => console.error("sign in failed", event.detail)}
       />
     </div>
-  );
+  ); 
 }
-
+ 
 export default SignInComponent;
